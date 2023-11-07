@@ -1,6 +1,7 @@
 package terlan.company.test;
 
 import org.junit.jupiter.api.Test;
+import terlan.company.dto.DepartmentAvgSalary;
 import terlan.company.dto.Employee;
 import terlan.company.service.CompanyService;
 import terlan.company.service.CompanyServiceImpl;
@@ -25,10 +26,10 @@ class CompanyTest {
     private static final int SALARY4 = 8000;
     private static final int SALARY5 = 9000;
 
-    private static final String DEPARTMENT1 = "QA";
-    private static final String DEPARTMENT2 = "Development";
-    private static final String DEPARTMENT3 = "Management";
-    private static final String DEPARTMENT6 = "Audit";
+    private static final String DEPARTMENT1 = "Dep1";
+    private static final String DEPARTMENT2 = "Dep2";
+    private static final String DEPARTMENT3 = "Dep3";
+    private static final String DEPARTMENT6 = "Dep1000";
 
     private static final LocalDate DATE1 = LocalDate.of(1970,10,23);
     private static final LocalDate DATE2 = LocalDate.of(1975,1,1);
@@ -111,20 +112,54 @@ class CompanyTest {
     @org.junit.jupiter.api.Test
     void getAllEmployees() {
         //home
+        List<Employee> listAll = company.getAllEmployees();
+        Employee[] actualAll = listAll.toArray(new Employee[]{});
+        Arrays.sort(actualAll);
+        Employee[] expectedAll = {empl1,empl2,empl3,empl4,empl5};
+        assertArrayEquals(actualAll,expectedAll);
     }
 
     @org.junit.jupiter.api.Test
     void getEmployeesBySalary() {
-        //home
+        List<Employee> listAll = company.getEmployeesBySalary(0,100000);
+        Employee[] actualAll = listAll.toArray(new Employee[]{});
+        Arrays.sort(actualAll);
+        assertArrayEquals(employees,actualAll);
+        List<Employee> listEmpty = company.getEmployeesBySalary(90000,100000);
+        assertTrue(listEmpty.isEmpty());
+        List<Employee> list1_2 = company.getEmployeesBySalary(SALARY1,SALARY3);
+        Employee[] actual1_2 = list1_2.toArray(new Employee[]{});
+        Employee[] expected1_2 = {empl1,empl2};
+        Arrays.sort(actual1_2);
+        assertArrayEquals(expected1_2,actual1_2);
     }
 
     @org.junit.jupiter.api.Test
     void getEmployeeByAge() {
-        //now
+        List<Employee> listAll = company.getEmployeeByAge(0,100);
+        Employee[] actualAll = listAll.toArray(new Employee[]{});
+        Arrays.sort(actualAll);
+        assertArrayEquals(employees,actualAll);
+        List<Employee> listEmpty = company.getEmployeeByAge(90,100);
+        assertTrue(listEmpty.isEmpty());
+        List<Employee> list2_3 = company.getEmployeeByAge(getAge(DATE3),getAge(DATE1));
+        Employee[] actual2_3 = list2_3.toArray(new Employee[]{});
+        Employee[] expected2_3 = {empl2,empl3};
+        Arrays.sort(actual2_3);
+        assertArrayEquals(expected2_3,actual2_3);
     }
 
     @org.junit.jupiter.api.Test
     void salaryDistributionByDepartments() {
+        DepartmentAvgSalary[] expectedDistribution = {
+                new DepartmentAvgSalary(DEPARTMENT1, (SALARY1 + SALARY2) / 2),
+                new DepartmentAvgSalary(DEPARTMENT2, (SALARY3 + SALARY4) / 2),
+                new DepartmentAvgSalary(DEPARTMENT3,SALARY5)
+        };
+        List<DepartmentAvgSalary> listDistribution = company.salaryDistributionByDepartments();
+        DepartmentAvgSalary[] actuallyDistribution = listDistribution.toArray(new DepartmentAvgSalary[]{});
+        Arrays.sort(actuallyDistribution);
+        assertArrayEquals(expectedDistribution,actuallyDistribution);
     }
 
     @org.junit.jupiter.api.Test
@@ -148,7 +183,7 @@ class CompanyTest {
     }
 
     private int getAge(LocalDate birthdate){
-        int result = (int) ChronoUnit.YEARS.between(birthdate,LocalDate.now());8
+        int result = (int) ChronoUnit.YEARS.between(birthdate,LocalDate.now());
         return result;
     }
 }
