@@ -4,7 +4,8 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 public record Employee(long id, String name, int salary,
-                       String department, LocalDate birthDate) implements Serializable {
+                       String department, LocalDate birthDate) implements Serializable,
+        Comparable<Employee> {
 
     @Override
     public boolean equals(Object o) {
@@ -17,5 +18,10 @@ public record Employee(long id, String name, int salary,
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(Employee o) {
+        return Long.compare(id,o.id);
     }
 }
