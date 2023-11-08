@@ -4,9 +4,18 @@ import terlan.company.dto.DepartmentAvgSalary;
 import terlan.company.dto.Employee;
 import terlan.company.dto.SalaryIntervalDistribution;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class CompanyServiceImpl implements CompanyService{
+    HashMap<Long,Employee> employeesMap = new HashMap<>();
+    HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
+    TreeMap<Integer, Set<Employee>> employeesSalary = new TreeMap<>();
+    TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>();
+
     @Override
     /**
      * adds new Employee into a company
@@ -79,7 +88,7 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public Employee updateSalary(long id, String newSalary) {
+    public Employee updateSalary(long id, int newSalary) {
         return null;
     }
 

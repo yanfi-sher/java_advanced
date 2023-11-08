@@ -17,7 +17,7 @@ public interface CompanyService {
     List<DepartmentAvgSalary> salaryDistributionByDepartments();
     List<SalaryIntervalDistribution> getSalaryDistribution(int interval);
     Employee updateDepartment(long id, String newDepartment);
-    Employee updateSalary(long id, String newSalary);
+    Employee updateSalary(long id, int newSalary);
     void save(String filePath);
     void restore(String filePath);
 
