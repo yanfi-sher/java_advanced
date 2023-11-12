@@ -1,7 +1,6 @@
 package terlan.interview;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class InterviewTasks {
 /**
@@ -36,7 +35,6 @@ public class InterviewTasks {
 		for (int num : set) {
 			if (moduleMap.containsKey(Math.abs(num))) {
 				maxNumber = Math.max(maxNumber, num);
-				//maxNumber = Math.max(maxNumber, Math.max(num, moduleMap.get(Math.abs(num))));
 			} else {
 				moduleMap.put(Math.abs(num), num);
 			}
@@ -59,5 +57,26 @@ public class InterviewTasks {
 		}
 		return occurrencesMap;
 	}
-	
+
+	public static boolean isAnagram(String str1, String str2){
+		boolean flag;
+		if (str1.equals(str2) || str1.length() != str2.length()) {
+			flag = false;
+		} else {
+			HashMap<Character,Integer> map1 = strToMap(str1);
+			HashMap<Character,Integer> map2 = strToMap(str2);
+			flag = map1.equals(map2);
+		}
+		return flag;
+	}
+	static HashMap<Character,Integer> strToMap(String str){
+		HashMap<Character,Integer> map = new HashMap<>();
+		for (char c : str.toCharArray()) {
+			map.put(c,map.merge(c, 1, Integer::sum));
+		}
+		return map;
+	}
 }
+
+//является ли вторая строка анаграммой первой строки, сложность O[N]
+//вернуть true false, а дается две строки String
