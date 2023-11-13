@@ -77,6 +77,3 @@ public class InterviewTasks {
 		return map;
 	}
 }
-
-//является ли вторая строка анаграммой первой строки, сложность O[N]
-//вернуть true false, а дается две строки String
