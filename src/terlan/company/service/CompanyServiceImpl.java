@@ -5,10 +5,7 @@ import terlan.company.dto.Employee;
 import terlan.company.dto.SalaryIntervalDistribution;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
 
 public class CompanyServiceImpl implements CompanyService{
     HashMap<Long,Employee> employeesMap = new HashMap<>();
@@ -24,8 +21,40 @@ public class CompanyServiceImpl implements CompanyService{
      * returns reference to the being added Employee object
      */
     public Employee hireEmployee(Employee empl) {
+        long id = empl.id();
+        if (employeesMap.containsKey(id)) {
+            throw new IllegalStateException("Employee already exists "+ id);
+        }
+        employeesMap.put(id,empl);
+        addEmployeeSalary(empl);
+        addEmployeeAge(empl);
+        addEmployeeDepartment(empl);
+        return empl;
+    }
 
-        return null;
+    private void addEmployeeDepartment(Employee empl) {
+        String department = empl.department();
+        //Set<Employee> set = employeesDepartment.computeIfAbsent(department,k -> new HashSet<Employee>());
+        //set.add(empl);
+        Set<Employee> set = employeesDepartment.get(department);
+        if (set == null){
+            set = new HashSet<>();
+            employeesDepartment.put(department,set);
+        }
+        set.add(empl);
+    }
+
+    private void addEmployeeAge(Employee empl) {
+        LocalDate birthDate = empl.birthDate();
+        Set<Employee> set = employeesAge.computeIfAbsent(birthDate,k->new HashSet<Employee>());
+        set.add(empl);
+    }
+
+    private void addEmployeeSalary(Employee empl) {
+        int salary = empl.salary();
+        //Set<Employee> set = employeesSalary.computeIfAbsent(salary,k -> new HashSet<Employee>());
+        //set.add(empl);
+        employeesSalary.computeIfAbsent(empl.salary(), k-> new HashSet<>()).add(empl);
     }
 
     @Override
@@ -35,7 +64,41 @@ public class CompanyServiceImpl implements CompanyService{
      * the method must throw IllegalStateException
      */
     public Employee fireEmployee(long id) {
-        return null;
+        Employee empl = employeesMap.remove(id);
+        if (empl == null){
+            throw new IllegalStateException("Employee not found " + id);
+        }
+        removeEmployeesDepartment(empl);
+        removeEmployeesSalary(empl);
+        removeEmployeesAge(empl);
+        return empl;
+    }
+
+    private void removeEmployeesAge(Employee empl) {
+        LocalDate birthDate = empl.birthDate();
+        Set<Employee> set = employeesAge.get(birthDate);
+        set.remove(empl); //removing reference to being employee from the set of employees with the given birthdate
+        if (set.isEmpty()){
+            employeesAge.remove(birthDate);
+        }
+    }
+
+    private void removeEmployeesSalary(Employee empl) {
+        int salary = empl.salary();
+        Set<Employee> set = employeesSalary.get(salary);
+        set.remove(empl);
+        if (set.isEmpty()){
+            employeesSalary.remove(salary);
+        }
+    }
+
+    private void removeEmployeesDepartment(Employee empl) {
+        String department = empl.department();
+        Set<Employee> set = employeesDepartment.get(department);
+        set.remove(empl);
+        if (set.isEmpty()){
+            employeesDepartment.remove(department);
+        }
     }
 
     @Override
@@ -45,7 +108,7 @@ public class CompanyServiceImpl implements CompanyService{
      * the method return null
      */
     public Employee getEmployee(long id) {
-        return null;
+        return employeesMap.get(id);
     }
 
     @Override
@@ -54,22 +117,40 @@ public class CompanyServiceImpl implements CompanyService{
      * in case none employees in the department, the method return empty list
      */
     public List<Employee> getEmployeesByDepartment(String department) {
-        return null;
+        Set<Employee> setEmployeesDep = employeesDepartment.getOrDefault(department, new HashSet<>());
+        return new ArrayList<>(setEmployeesDep);
     }
+
 
     @Override
     public List<Employee> getAllEmployees() {
-        return null;
+        return new ArrayList<>(employeesMap.values());
     }
 
     @Override
-    public List<Employee> getEmployeesBySalary(int salaryTo, int salary) {
-        return null;
+    public List<Employee> getEmployeesBySalary(int salaryFrom, int salaryTo) {
+        Collection<Set<Employee>> col = employeesSalary.subMap(salaryFrom,salaryTo).values();
+        ArrayList<Employee> res = new ArrayList<>();
+        for (Set<Employee> set: col){
+            res.addAll(set);
+        }
+        return res;
     }
 
     @Override
     public List<Employee> getEmployeeByAge(int ageFrom, int ageTo) {
-        return null;
+        LocalDate dateFrom = getBirthDate(ageTo);
+        LocalDate dateTo = getBirthDate(ageFrom);
+        Collection<Set<Employee>> col = employeesAge.subMap(dateFrom,dateTo).values();
+        ArrayList<Employee> res = new ArrayList<>();
+        for (Set<Employee> set: col){
+            res.addAll(set);
+        }
+        return res;
+    }
+
+    private LocalDate getBirthDate(int age) {
+        return LocalDate.now().minusYears(age);
     }
 
     @Override
@@ -84,12 +165,17 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Override
     public Employee updateDepartment(long id, String newDepartment) {
-        return null;
+        Employee empl = fireEmployee(id);
+        Employee newEmployee = new Employee(id,empl.name(),empl.salary(),newDepartment,empl.birthDate());
+        return hireEmployee(newEmployee);
     }
 
     @Override
     public Employee updateSalary(long id, int newSalary) {
-        return null;
+        Employee empl = fireEmployee(id);
+        Employee newEmployee = new Employee(id,empl.name(),newSalary,
+                empl.department(),empl.birthDate());
+        return hireEmployee(newEmployee);
     }
 
     @Override
