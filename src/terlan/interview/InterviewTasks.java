@@ -1,6 +1,7 @@
 package terlan.interview;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InterviewTasks {
 /**
@@ -80,6 +81,20 @@ public class InterviewTasks {
 	//Task for streams /grouping
 	public static void displayDigitsDistribution() {
 		int nNumbers = 1_000_000;
+		Random gen = new Random();
+		int[] integer = gen.ints(1,Integer.MAX_VALUE)
+				.distinct().limit(nNumbers).toArray();
+
+		Map<String, Long> numbersMap = Arrays.stream(integer)
+				.mapToObj(Integer::toString)
+				.flatMapToInt(String::chars)
+				.mapToObj(c -> "" + (char)c)
+				.collect(Collectors.groupingBy(s -> s, Collectors.counting()));
+
+
+		numbersMap.entrySet().stream().sorted((e1,e2)->Long.compare(e2.getValue(), e1.getValue()))
+				.forEach(e -> System.out.println(e.getKey() + " - " + "<"+e.getValue()+">"));
+
 		//create stream of random int's (nNumbers), each int number in range [1, Integer.Max_VALUE)
 		//conversion to stream of Strings
 		//extracting separate char's from Strings
