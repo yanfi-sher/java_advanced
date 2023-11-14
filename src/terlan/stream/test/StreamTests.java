@@ -62,11 +62,21 @@ public class StreamTests {
     }
 
     @Test
+    @Disabled
     void stringStream(){
         String string = "Hello";
         //string.chars().forEach(c -> System.out.printf("%c, ",c));
         string.chars().mapToObj(c->""+(char)c).forEach(s -> System.out.print(s+", "));
     }
+
+    @Test
+    void splittingStringArray(){
+        String[] strings = {"Hello","World"};
+        Arrays.stream(strings).flatMapToInt(String::chars).
+                mapToObj(c->""+(char)c).forEach(s -> System.out.print(s+", "));
+    }
+
+
 
 
 }
