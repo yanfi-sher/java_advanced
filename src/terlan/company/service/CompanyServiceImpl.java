@@ -6,6 +6,7 @@ import terlan.company.dto.SalaryIntervalDistribution;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CompanyServiceImpl implements CompanyService{
     HashMap<Long,Employee> employeesMap = new HashMap<>();
@@ -155,7 +156,12 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Override
     public List<DepartmentAvgSalary> salaryDistributionByDepartments() {
-        return null;
+        Map<String, Double> map = employeesMap.values().stream()
+            .collect(Collectors.groupingBy(Employee::department
+                        ,Collectors.averagingInt(Employee::salary)));
+
+        return map.entrySet().stream()
+                .map(e->new DepartmentAvgSalary(e.getKey(),e.getValue().intValue())).toList();
     }
 
     @Override
