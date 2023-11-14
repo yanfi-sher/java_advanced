@@ -1,32 +1,34 @@
 package terlan.interview;
 
+import java.util.HashMap;
+
 public class MyArray {
-    private final int size;
-    private final int[] array;
+    private int size;
+    private int allValues;
+    private HashMap<Integer, Integer> valuesMap = new HashMap<>();
+
     public MyArray(int size) {
-        this.size = size;
-        array = new int[size];
+        this.size= size;
     }
 
     public void setAll(int value) {
-        for (int i=0;i<size;i++){
-            array[i]=value;
-        }
+
+        valuesMap = new HashMap<>();
+        allValues = value;
     }
 
     public Integer get(int index) {
-        if (index >= 0 && index < array.length) {
-            return array[index];
-        } else {
-            return null;
+        Integer res = null;
+        if (index >= 0 && index < size) {
+            res = valuesMap.getOrDefault(index, allValues);
         }
+        return res;
     }
 
     public void set(int index, int value) {
-        try {
-            array[index] = value;
-        } catch (Exception e) {
-            throw new IndexOutOfBoundsException("Index out of bounds");
+        if(index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(index);
         }
+        valuesMap.put(index, value);
     }
 }
