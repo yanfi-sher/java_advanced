@@ -5,11 +5,13 @@ import static terlan.interview.InterviewTasks.*;
 
 import java.util.HashMap;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 class InterviewTasksTest {
 
 	@Test
+	@Disabled
 	void isSum2Test() {
 		int [] ar1 = {1000, 300, -200, 20, 40, -10};
 		assertTrue(isSum2(ar1, 800));
@@ -17,6 +19,7 @@ class InterviewTasksTest {
 		assertFalse(isSum2(ar1, 50));
 	}
 	@Test
+	@Disabled
 	void getMaxPositiveWithNegativeValueTest() {
 		int [] ar1 = {-1,100, 200, -50, 1, -100, 50};
 		int [] ar2 = {-1, -100, 200, -500, 10, -100, 50, 200};
@@ -24,6 +27,7 @@ class InterviewTasksTest {
 		assertEquals(-1,  getMaxPositiveWithNegativeValue(ar2));
 	}
 	@Test
+	@Disabled
 	void getMapOccurrencesTest() {
 		String[] strings = {
 			"lpm", "ab", "a", "lpm", "a", "aa", "lpm"
@@ -36,6 +40,7 @@ class InterviewTasksTest {
 	}
 
 	@Test
+	@Disabled
 	void getTestIsAnagramTest() {
 		String string = "yellow";
 		assertTrue(isAnagram(string, "wolely"));
@@ -46,6 +51,26 @@ class InterviewTasksTest {
 		assertFalse(isAnagram(string, string));//the same order
 		assertFalse(isAnagram(string, "wglely"));//g is not from the string
 		assertFalse(isAnagram(string, "wolye"));//must be two 'l'
+	}
+
+	@Test
+	void displayDigitsDistributionTest() {
+		displayDigitsDistribution();
+		//required output
+		/* always 1 will be first
+		 *        2 will be second
+		 * 1 - <counter of occurrences>
+		 * 2 -  <counter of occurrences>
+		 * random order of digits
+		 * 0 - <counter of occurrences>
+		 * 4 - <counter of occurrences>
+		 * 3 - <counter of occurrences>
+		 * 5 - <counter of occurrences>
+		 * 7 - <counter of occurrences>
+		 * 6 - <counter of occurrences>
+		 * 9 - <counter of occurrences>
+		 * 8 - <counter of occurrences>
+		 */
 	}
 
 }

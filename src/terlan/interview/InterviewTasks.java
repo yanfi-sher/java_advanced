@@ -76,4 +76,15 @@ public class InterviewTasks {
 		}
 		return map;
 	}
+
+	//Task for streams /grouping
+	public static void displayDigitsDistribution() {
+		int nNumbers = 1_000_000;
+		//create stream of random int's (nNumbers), each int number in range [1, Integer.Max_VALUE)
+		//conversion to stream of Strings
+		//extracting separate char's from Strings
+		//grouping with counting of occurrences
+		//sorting in descending order of occurrences
+		//printing
+	}
 }
