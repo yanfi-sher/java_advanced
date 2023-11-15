@@ -105,6 +105,12 @@ public class InterviewTasks {
 
 	//HW 15/11
 	public static void displayArrayShuffling(int[] array){
+		Random gen = new Random();
+		Map<Integer,Integer> numbersMap = Arrays.stream(array).boxed()
+				.collect(Collectors.toMap(c->gen.nextInt(), c->c));
+		numbersMap.entrySet().stream().sorted((e1,e2)->e1.getKey().compareTo(e2.getKey()))
+				.forEach(e -> System.out.print(e.getValue()+ ", "));
+		System.out.println();
 		// приходит массив, распечатать элементы в случайном порядке (каждый раз порядок произвольный)
 	}
 
