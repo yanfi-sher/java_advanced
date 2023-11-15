@@ -102,4 +102,13 @@ public class InterviewTasks {
 		//sorting in descending order of occurrences
 		//printing
 	}
+
+	//HW 15/11
+	public static void displayArrayShuffling(int[] array){
+		// приходит массив, распечатать элементы в случайном порядке (каждый раз порядок произвольный)
+	}
+
+
+
+
 }
