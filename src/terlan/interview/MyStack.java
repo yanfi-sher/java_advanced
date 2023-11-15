@@ -23,9 +23,6 @@ public class MyStack {
         if (maxMap.getLast()==res)
             maxMap.removeLast();
         return res;
-
-        //возвращается и удаляется последний элемент
-        //если пустой стэк, то бросается NoSuchElementException
     }
 
     private void emptyException() {
@@ -35,16 +32,11 @@ public class MyStack {
     }
 
     public boolean isEmpty(){
-        // выясняет пустой стэк или нет
         return stackMap.isEmpty();
     }
 
     public int getMax(){
         emptyException();
         return maxMap.getLast();
-        //возвращает наибольшее число, если стек не пустой
-        //если пустой стэк, то бросается NoSuchElementException
-
-        //я думаю, что сложность не та!!!! надо переделать...
     }
 }
