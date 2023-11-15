@@ -4,6 +4,7 @@ import terlan.company.dto.DepartmentAvgSalary;
 import terlan.company.dto.Employee;
 import terlan.company.dto.SalaryIntervalDistribution;
 
+import java.io.*;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -166,7 +167,11 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Override
     public List<SalaryIntervalDistribution> getSalaryDistribution(int interval) {
-        return null;
+        Map<Integer, Long> map = employeesMap.values().stream()
+                .collect(Collectors.groupingBy(e->e.salary()/interval, Collectors.counting()));
+        return map.entrySet().stream().sorted(Comparator.comparingInt(Map.Entry::getKey))
+                .map(e->new SalaryIntervalDistribution
+                        (e.getKey()*interval,(e.getKey()+1)*interval, e.getValue())).toList();
     }
 
     @Override
@@ -186,11 +191,26 @@ public class CompanyServiceImpl implements CompanyService{
 
     @Override
     public void save(String filePath) {
-
+        try(ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream(filePath))){
+            output.writeObject(getAllEmployees());
+        }catch (Exception e){
+            System.out.println(e.toString());
+            throw new RuntimeException(e);
+        }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void restore(String filePath) {
-
+        List<Employee> employees = null;
+        try(ObjectInputStream input = new ObjectInputStream(new FileInputStream(filePath))){
+            employees = (List<Employee>) input.readObject();
+            employees.forEach(this::hireEmployee);
+        }catch (FileNotFoundException e){
+            System.out.println(filePath + "File with data doesn't exist");
+        }catch (Exception e){
+            System.out.println(e);
+            throw new RuntimeException(e);
+        }
     }
 }

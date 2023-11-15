@@ -143,12 +143,13 @@ class CompanyTest {
 
     @org.junit.jupiter.api.Test
     void getSalaryDistribution() {
-        int interval = 2000;
-        List<SalaryIntervalDistribution> distribution = company.getSalaryDistribution(2000);
+        int interval = 1500;
+        List<SalaryIntervalDistribution> distribution = company.getSalaryDistribution(1500);
         SalaryIntervalDistribution[] expectedDistribution = {
-                new SalaryIntervalDistribution(SALARY1,SALARY1+interval,2),
-                new SalaryIntervalDistribution(SALARY3,SALARY3+interval,2),
-                new SalaryIntervalDistribution(SALARY5, SALARY5+interval,1)
+                new SalaryIntervalDistribution(4500,4500+interval,1),
+                new SalaryIntervalDistribution(6000,6000+interval,2),
+                new SalaryIntervalDistribution(7500, 7500+interval,1),
+                new SalaryIntervalDistribution(9000, 9000+interval,1)
         };
         assertArrayEquals(expectedDistribution,distribution.toArray(new SalaryIntervalDistribution[0]));
     }
