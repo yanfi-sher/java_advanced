@@ -9,7 +9,7 @@ public class MyStack {
 
     public void push(int number){
         stackMap.addLast(number);
-        if (maxMap.isEmpty() || maxMap.getLast()<=number)
+        if (maxMap.isEmpty() || maxMap.getLast()<number)
             maxMap.addLast(number);
     }
 
