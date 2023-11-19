@@ -115,6 +115,33 @@ public class InterviewTasks {
 	}
 
 
+	public static void prefixFound(String[] array, String str){
+		int accum = 0;
+		ArrayList<String> array1 = new ArrayList<>();
+		for (String string: array) {
+			if (string.length() >= str.length()) {
+				for (int i = 0; i < str.length(); i++) {
+					if (string.charAt(i) == str.charAt(i)) {
+						accum++;
+					}
+				}
+				if (accum == str.length()) {
+					array1.add(string);
+				}
+				accum = 0;
+			}
+		}
+		System.out.println(array1);
+	}
+
+	public static void main(String[] args) {
+		String[] array = {"aaaba", "aa", "aabbb", "aaabbb", "maaaam",
+				"a", "bbbbaaaa", "amamam", "aaaber"};
+		String str = "aaab";
+		prefixFound(array,str);
+	}
+
+
 
 
 }
