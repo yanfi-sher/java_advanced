@@ -4,9 +4,9 @@ import java.util.function.Function;
 
 public interface InputOutput {
     String readString(String prompt);
-    void wrire(String str);
+    void write(String str);
     default void writeLine(String str){
-        wrire(str + "\n");
+        write(str + "\n");
     }
     default <T>T readObject(String prompt, String errorPrompt, Function<String,T> mapper){
         boolean running = true;
@@ -21,6 +21,6 @@ public interface InputOutput {
                 writeLine(errorPrompt + ": " + e.getMessage());
             }
         }while (running);
-        return null;
+        return res;
     }
 }
