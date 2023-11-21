@@ -13,5 +13,6 @@ public class NumbersMenu {
     private static Item[] getItems() {
         return ArithmeticSimpleCalculatorAppl.getItems();
     }
+
 }
 
