@@ -1,14 +1,14 @@
-package terlan.company.test;
+package telran.company.test;
 
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
-import terlan.company.dto.DepartmentAvgSalary;
-import terlan.company.dto.Employee;
-import terlan.company.dto.SalaryIntervalDistribution;
-import terlan.company.service.CompanyService;
-import terlan.company.service.CompanyServiceImpl;
+import telran.company.dto.DepartmentAvgSalary;
+import telran.company.dto.Employee;
+import telran.company.dto.SalaryIntervalDistribution;
+import telran.company.service.CompanyService;
+import telran.company.service.CompanyServiceImpl;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;

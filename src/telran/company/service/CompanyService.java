@@ -1,8 +1,8 @@
-package terlan.company.service;
+package telran.company.service;
 
-import terlan.company.dto.DepartmentAvgSalary;
-import terlan.company.dto.Employee;
-import terlan.company.dto.SalaryIntervalDistribution;
+import telran.company.dto.DepartmentAvgSalary;
+import telran.company.dto.Employee;
+import telran.company.dto.SalaryIntervalDistribution;
 
 import java.util.List;
 

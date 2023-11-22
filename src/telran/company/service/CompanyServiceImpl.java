@@ -1,8 +1,8 @@
-package terlan.company.service;
+package telran.company.service;
 
-import terlan.company.dto.DepartmentAvgSalary;
-import terlan.company.dto.Employee;
-import terlan.company.dto.SalaryIntervalDistribution;
+import telran.company.dto.DepartmentAvgSalary;
+import telran.company.dto.Employee;
+import telran.company.dto.SalaryIntervalDistribution;
 
 import java.io.*;
 import java.time.LocalDate;
@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CompanyServiceImpl implements CompanyService{
-    HashMap<Long,Employee> employeesMap = new HashMap<>();
+    HashMap<Long, Employee> employeesMap = new HashMap<>();
     HashMap<String, Set<Employee>> employeesDepartment = new HashMap<>();
     TreeMap<Integer, Set<Employee>> employeesSalary = new TreeMap<>();
     TreeMap<LocalDate, Set<Employee>> employeesAge = new TreeMap<>();
