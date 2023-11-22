@@ -1,7 +1,11 @@
 package terlan.interview;
 
+import jdk.internal.org.jline.reader.History;
+
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+record DateTitle(LocalDate date, String title){}
 
 public class InterviewTasks {
 /**
@@ -139,6 +143,12 @@ public class InterviewTasks {
 				"a", "bbbbaaaa", "amamam", "aaaber"};
 		String str = "aaab";
 		prefixFound(array,str);
+	}
+
+	//метод принимает набор дат, в какие даты были какие должности
+	public static List<dateTitle> fillAndGetTitles(List<DateTitle>historyTitles, List<LocalDate> dates) {
+
+		return null;
 	}
 
 
